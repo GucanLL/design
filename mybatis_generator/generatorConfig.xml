@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<classPathEntry location="D:\Workspaces\juniu\repository\mysql\mysql-connector-java\5.1.9\mysql-connector-java-5.1.9.jar"/>
+	<context id="muxing_tables" targetRuntime="MyBatis3">
+		<property name="mybatis.generator.overwrite" value="true"/>
+       	<commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+		<!-- <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/design?useUnicode=true&amp;characterEncoding=utf-8"
+                        userId="root"
+                        password="1234"/>-->
+        <jdbcConnection driverClass="${jdbc.driver}"
+			connectionURL="${jdbc.url}" userId="${jdbc.username}"
+			password="${jdbc.password}" />
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="true"/>
+        </javaTypeResolver>
+        
+		<javaModelGenerator targetPackage="math.design.base.model"
+			targetProject="design" />
+		
+		<javaClientGenerator targetPackage="math.design.base.mapper"
+			targetProject="design" type="ANNOTATEDMAPPER" >
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>	
+		<!-- <table tableName="math_score" domainObjectName="BaseScore"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false"></table> -->
+		<table tableName="math_lessons" domainObjectName="BaseLesson"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false"></table>
+	</context>
+</generatorConfiguration>

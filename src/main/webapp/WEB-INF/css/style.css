@@ -1,0 +1,43 @@
+@CHARSET "UTF-8";
+
+  ul li {list-style:none;}
+  body {font-size:14px;font-name:Microsoft Yahei;font-color:#333; }
+ * {margin:0px;padding:0px;}
+ .clearfix:after  {content:".";display:block;height:0px;clear:"both";visibility:hidden;}
+ * html .clearfix{display:inline-block;width:100%;}
+ * html .clearfix{height:1%;}
+ * html .clearfix{min-height:1%;}
+ .left {float:left;}
+ .right {float:right;}
+ .clear {clear:both;}
+ .navbar-h { min-height:35px;padding-top:6px; border: 1px solid transparent;position: relative;}
+ .navbar-de {min-height:43px;border:#6f040c 1px solid;background:#d8000f;}
+ .nav-h > li > a {display:inline !important;}
+
+
+ .footer-background {background:#137;min-height:50px;}
+ .footer-backgronndg {margin-top:20px;text-align:center;color:#fff}
+ 
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+.clearfix{display:inline-table}
+*html .clearfix{height:1%}
+.clearfix{display:block}
+*+html .clearfix{min-height:1%}
+a:hover{cursor: pointer;}
+/* ny_zb */
+.ny_zb{width:268px;overflow:hidden;border-left:1px solid #dddddd;border-right:1px solid #dddddd;border-bottom:1px solid #dddddd;font-family:"微软雅黑";margin:40px auto 0 auto;}
+.ny_zbbt{background-color:#137fbe;height:50px;line-height:50px;font-weight:800;overflow:hidden;border-top:2px solid #137;font-size:16px;}
+.ny_zbbt span{padding-left:30px;font-size:16px;color:#ffffff;line-height:40px;}
+
+
+/* 左边侧栏 */
+.accordion-group .accordion-heading{line-height: 50px;border-bottom: 1px solid #B7B4B4; }
+.accordion-group .accordion-heading a{padding: 25px 0 25px 20px;font-size: 16px;font-weight: 600;text-decoration: none;color:#000000; }
+.accordion-group .accordion-heading span{float: right;padding: 25px; }
+.accordion-group .accordion-body .accordion-inner{line-height: 50px;border-bottom: 1px solid #B7B4B4; }
+.accordion-group .accordion-body .accordion-inner a{font-size: larger;font-size: 16px;padding: 25px 0 25px 45px;text-decoration: none;color:#000000; }
+.accordion-group .accordion-body .accordion-inner span{float: right;padding: 25px; }
+.accordion-group .accordion-heading a:hover ,.accordion-group .accordion-body .accordion-inner a:hover {color:#137fbe;}
+.accordion-group .accordion-body .on{line-height: 50px;border-bottom: 1px solid #B7B4B4; }
+    
+   
