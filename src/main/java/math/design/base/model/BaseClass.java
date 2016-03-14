@@ -4,6 +4,8 @@ public class BaseClass {
     private String classId;
 
     private String classTeacherId;
+    
+    private String classTeacherName;
 
     private String classNumber;
 
@@ -17,7 +19,15 @@ public class BaseClass {
         this.classId = classId;
     }
 
-    public String getClassTeacherId() {
+    public String getClassTeacherName() {
+		return classTeacherName;
+	}
+
+	public void setClassTeacherName(String classTeacherName) {
+		this.classTeacherName = classTeacherName;
+	}
+
+	public String getClassTeacherId() {
         return classTeacherId;
     }
 

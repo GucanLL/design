@@ -15,6 +15,11 @@ import math.design.base.service.UserService;
 import math.design.util.MD5Util;
 import math.design.util.UUIDGenerator;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,28 +44,11 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/checkLogin", method = RequestMethod.POST)
 	@ResponseBody
-	public String checkLogin(HttpServletRequest request,BaseUser user){
+	public String checkLogin(HttpServletRequest request,LoginUser user,boolean rememberMe){
 		LoginUser lu = new LoginUser();
 		MD5Util md5=new MD5Util();
 		user.setPassword(md5.getMD5ofStr(user.getPassword()));
-		if(user != null){
-			if(user.getIdentityNum() != null && user.getPassword() != null 
-					&&user.getIdentityNum() != "" && user.getPassword() != ""){
-				BaseUser u = userService.selectLogin(user);
-				if(u!=null){
-					lu.setAcademy(u.getAcademy());
-					lu.setAtClass(u.getAtClass());
-					lu.setId(u.getId());
-					lu.setIdentityNum(u.getIdentityNum());
-					lu.setName(u.getName());
-					lu.setRole(u.getRole());
-					HttpSession session = request.getSession();
-					session.setAttribute("loginUser", lu);
-					return "success";
-				}
-			}
-		}
-		return "error";
+		return userService.loginController(user,rememberMe);
 	}
 	@RequestMapping(value = "/userRegisterPage", method = RequestMethod.GET)
 	public String userRegisterPage(HttpServletRequest request){
@@ -72,14 +60,28 @@ public class UserController {
 	@RequestMapping(value = "/userRegister", method = RequestMethod.POST)
 	@ResponseBody
 	public String userRegister(HttpServletRequest request,BaseUser user){
-		LoginUser lu = new LoginUser();
 		MD5Util md5=new MD5Util();
 		user.setPassword(md5.getMD5ofStr(user.getPassword()));
 		user.setId(UUIDGenerator.getUUID());
 		int result = userService.insertSelective(user);
 		if(result>0){
-			
-			return "success";
+			UsernamePasswordToken token = new UsernamePasswordToken();
+			token.setUsername(user.getIdentityNum());
+			token.setPassword(user.getPassword().toCharArray());
+			try {
+				SecurityUtils.getSubject().login(token);
+				return "success";
+			} catch (AuthenticationException e) {//登陆失败
+				//如果登陆失败销毁session
+				Subject currentUser = SecurityUtils.getSubject();
+	    		Session session = currentUser.getSession();
+	    		session.removeAttribute("loginUser");
+				System.out.println(e.getMessage());
+				if(e.getMessage() == "usererror"){//用户不存在
+					return "usererror";
+				}
+				return "error";//用户密码错误
+			}
 		}else{
 			return "error";
 		}

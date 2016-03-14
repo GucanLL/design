@@ -8,13 +8,13 @@
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
-		<!-- <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/design?useUnicode=true&amp;characterEncoding=utf-8"
                         userId="root"
-                        password="1234"/>-->
-        <jdbcConnection driverClass="${jdbc.driver}"
+                        password="1234"/>
+        <!-- <jdbcConnection driverClass="${jdbc.driver}"
 			connectionURL="${jdbc.url}" userId="${jdbc.username}"
-			password="${jdbc.password}" />
+			password="${jdbc.password}" /> -->
         <javaTypeResolver>
             <property name="forceBigDecimals" value="true"/>
         </javaTypeResolver>
@@ -30,7 +30,7 @@
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table> -->
-		<table tableName="math_lessons" domainObjectName="BaseLesson"
+		<table tableName="math_role" domainObjectName="BaseRole"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>

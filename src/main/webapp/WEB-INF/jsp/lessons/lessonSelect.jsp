@@ -7,7 +7,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%@ include file="/WEB-INF/jsp/include/common.jsp" %>
-<title>Insert title here</title>
+<title>查看课程</title>
 </head>
 <body>
 	<table>

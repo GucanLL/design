@@ -1,5 +1,7 @@
 package math.design.base.mapper;
 
+import java.util.List;
+
 import math.design.base.model.BaseClass;
 
 import org.apache.ibatis.annotations.Delete;
@@ -57,4 +59,19 @@ public interface BaseClassMapper {
         "where CLASS_ID = #{classId,jdbcType=VARCHAR}"
     })
     int updateByPrimaryKey(BaseClass record);
+    
+    @Select({
+        "SELECT "
+        + "CLASS_ID, CLASS_TEACHER_ID, CLASS_NUMBER, IS_ENABLE, "
+        + "( SELECT mu.`NAME` FROM math_user mu WHERE mu.ROLE = 'r2' AND mu.ID = mc.CLASS_TEACHER_ID ) AS teacherName "
+        + "FROM math_classes mc"
+    })
+    @Results({
+        @Result(column="CLASS_ID", property="classId", jdbcType=JdbcType.VARCHAR, id=true),
+        @Result(column="CLASS_TEACHER_ID", property="classTeacherId", jdbcType=JdbcType.VARCHAR),
+        @Result(column="CLASS_NUMBER", property="classNumber", jdbcType=JdbcType.VARCHAR),
+        @Result(column="IS_ENABLE", property="isEnable", jdbcType=JdbcType.VARCHAR),
+        @Result(column="teacherName", property="classTeacherName", jdbcType=JdbcType.VARCHAR)
+    })
+    List<BaseClass> selectAll();
 }

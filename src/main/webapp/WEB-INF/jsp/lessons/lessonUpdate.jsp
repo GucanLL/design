@@ -23,13 +23,14 @@
 	</select>
 	<button onclick="submit()">确认</button>
 	<input type="hidden" id="userId" value="${userId }">
+	<input type="text" id="classId" value="${lesson.classId }">
 	<script type="text/javascript">
 		$(function(){
-			var userId = $("#userId").val();
+			var classId = $("#classId").val();
 			$.ajax({
 				type:"post",
-				url : "/lesson/lessonEdit",
-				data : {type : "1"},
+				url : "/lesson/lessonUpdate",
+				data : {classId : classId},
 				success : function(data){
 					
 				}

@@ -4,6 +4,8 @@ public class LoginUser {
 	private String id;
 
     private String identityNum;
+    
+    private String password;
 
     private String name;
 
@@ -60,6 +62,15 @@ public class LoginUser {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
     
+	
     
 }

@@ -2,7 +2,9 @@ package math.design.base.mapper;
 
 import java.util.List;
 
+import math.design.base.model.BaseRole;
 import math.design.base.model.BaseUser;
+import math.design.base.model.LoginUser;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -127,7 +129,7 @@ public interface BaseUserMapper {
         "POLITICAL_STATUS, JOB_TITLE, EMAIL, ACADEMY, AT_CLASS, MAJOR_RESEARCH, ADDRESS, ",
         "ADMISSION_DATE, BIRTHDAY, REMARKS, SCHOOL_LENGTH, ROLE, PASSWORD, ADD_BY, LAST_MODIFY_TIME",
         "from math_user",
-        "where (PASSWORD = #{password,jdbcType=VARCHAR} and IDENTITY_NUM = #{identityNum,jdbcType=VARCHAR})"
+        "where IDENTITY_NUM = #{identityNum,jdbcType=VARCHAR}"
     })
     @Results({
         @Result(column="ID", property="id", jdbcType=JdbcType.VARCHAR),
@@ -154,7 +156,7 @@ public interface BaseUserMapper {
         @Result(column="ADD_BY", property="addBy", jdbcType=JdbcType.VARCHAR),
         @Result(column="LAST_MODIFY_TIME", property="lastModifyTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    BaseUser selectLogin(BaseUser record);
+    LoginUser selectLogin(LoginUser record);
     
     @Select({
     	"SELECT ID,IDENTITY_NUM,NAME FROM math_user WHERE ROLE = #{role,jdbcType=VARCHAR}"

@@ -65,8 +65,7 @@
 
 	<!-- 数据源配置, 使用Tomcat JDBC连接池 -->
 
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-		destroy-method="close">
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<!-- Connection Info -->
 		<property name="driverClass" value="${jdbc.driver}" />
 		<property name="jdbcUrl" value="${jdbc.url}" />
@@ -77,30 +76,4 @@
 		<property name="maxPoolSize" value="${jdbc.pool.maxPoolSize}" />
 		<property name="minPoolSize" value="${jdbc.pool.minPoolSize}" />
 	</bean>
-
-	<!-- 数据源配置，使用不同的配置文件 -->
-	<!-- production正式环境 -->
-	<beans profile="production">
-		<util:properties id="appPropertys"
-			location="classpath:/application.properties" />
-		<context:property-placeholder
-			properties-ref="appPropertys" />
-	</beans> 
-
-	<!-- test测试环境 -->
-	<beans profile="test">
-		<util:properties id="appPropertys"
-			location="classpath:/application-test.properties" />
-		<context:property-placeholder
-			properties-ref="appPropertys" />
-	</beans>  
- 
-	<!-- local开发环境 -->
-	<beans profile="local">
-		<util:properties id="appPropertys"
-			location="classpath:/application-local.properties" />
-		<context:property-placeholder
-			properties-ref="appPropertys" />
-	</beans>
-
 </beans>

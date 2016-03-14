@@ -9,6 +9,7 @@ import math.design.base.mapper.BaseLessonMapper;
 import math.design.base.mapper.BaseUserMapper;
 import math.design.base.model.BaseLesson;
 import math.design.base.model.BaseUser;
+import math.design.base.model.DesignContent;
 import math.design.base.service.LessonService;
 import math.design.base.service.UserService;
 import math.design.util.UUIDGenerator;
@@ -36,7 +37,7 @@ public class LessonController {
 	 */
 	@RequestMapping(value = "/lessonEditPage",method=RequestMethod.GET)
 	public String lessonEditPage(Model model){
-		List<BaseUser> teacher = userService.selectUserByRole("2");
+		List<BaseUser> teacher = userService.selectUserByRole(DesignContent.TEACHER_ROLE_ID);
 		model.addAttribute("teacherInfo", teacher);
 		return "lessons/lessonsEdit";
 	}
@@ -45,13 +46,25 @@ public class LessonController {
 	 * 课程更新页面
 	 */
 	@RequestMapping(value = "/lessonUpdate/{id}",method=RequestMethod.GET)
-	public String lessonUpdate(HttpServletRequest request,@PathVariable String id,Model model){
+	public String lessonUpdatePage(HttpServletRequest request,@PathVariable String id,Model model){
 		model.addAttribute("userId", id);
 		BaseLesson lesson = lessonService.selectByPrimaryKey(id);
-		List<BaseUser> teacher = userService.selectUserByRole("2");
+		List<BaseUser> teacher = userService.selectUserByRole(DesignContent.TEACHER_ROLE_ID);
 		model.addAttribute("teacherInfo", teacher);
 		model.addAttribute("lesson", lesson);
 		return "lessons/lessonUpdate";
+	}
+	
+	/*
+	 * 课程更新
+	 */
+	@RequestMapping(value = "/lessonUpdate",method=RequestMethod.GET)
+	public int lessonUpdate(HttpServletRequest request,BaseLesson lesson){
+		int result = 0;
+		if(lesson != null && lesson.getClassId() != null && lesson.getClassId() != ""){
+			result = lessonService.updateByPrimaryKeySelective(lesson);
+		}
+		return result;
 	}
 	
 	/*
@@ -59,29 +72,16 @@ public class LessonController {
 	 */
 	@RequestMapping(value = "/lessonEdit",method=RequestMethod.POST)
 	@ResponseBody
-	public String lessonEdit(HttpServletRequest request , BaseLesson lesson ,String type){
+	public String lessonEdit(HttpServletRequest request , BaseLesson lesson){
 		
 		//type : 0为插入  1为更新
-		int result = 0;
 		List<BaseLesson> lessonsList = lessonService.countLessonsExsistByClassName(lesson.getClassName());
-		if("0".equals(type)){
+		if(lessonsList == null){
 			lesson.setClassId(UUIDGenerator.getUUID());
 			if(lesson.getIsEnable() == null){
 				lesson.setIsEnable("0");
 			}
-			result = lessonService.insertSelective(lesson);
-		}else if("1".equals(type)){
-			if(lessonsList.size() < 2){
-				for(BaseLesson l : lessonsList){
-					lessonsList.size();
-					lesson.setClassId(l.getClassId());
-					result = lessonService.updateByPrimaryKeySelective(lesson);
-				}
-			}
-		}
-		
-		
-		if(result == 0){
+			int result = lessonService.insertSelective(lesson);
 			return "success";
 		}
 		return "error";

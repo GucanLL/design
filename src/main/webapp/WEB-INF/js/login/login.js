@@ -25,15 +25,15 @@ function userlogin(){
 	    type : "post",
 	    url : "/user/checkLogin",
 	    data : {
-	      'identityNum' : $("#loginuser").val(),
-	      'password' : $("#loginpwd").val()
+	      'identityNum' : identityNum,
+	      'password' : password
 	    },
 	    success : function(data) {
-	    	if(data=="success"){
-	    		alert("成功")
-	    		window.location.href='/user/userEditPage';
-	    	}else if(data == "error"){
+	    	if(data != "success"){
 	    		alert("请核对输入的学号及密码")
+	    	}else{
+	    		alert("成功")
+	    		window.location.href='/user/userInfoSearch';
 	    	}
 	    },
 	    error:function(data,t){
