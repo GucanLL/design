@@ -1,12 +1,11 @@
 package math.design.base.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import math.design.base.mapper.BaseLessonMapper;
-import math.design.base.mapper.BaseUserMapper;
 import math.design.base.model.BaseLesson;
 import math.design.base.model.BaseUser;
 import math.design.base.model.DesignContent;
@@ -32,7 +31,19 @@ public class LessonController {
 	@Autowired
 	private UserService userService;
 
-	/*
+	/**
+	 * 根据课程ID查询课程详情
+	 */
+	@RequestMapping(value = "/selectLesson",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> selectLesson(HttpServletRequest request ,String classId){
+		Map<String,Object> map = new HashMap<String, Object>();
+		BaseLesson lesson = lessonService.selectByPrimaryKey(classId);
+		map.put("classInfp", lesson);
+		return map;
+	}
+	
+	/**
 	 * 课程添加页面
 	 */
 	@RequestMapping(value = "/lessonEditPage",method=RequestMethod.GET)
@@ -42,41 +53,39 @@ public class LessonController {
 		return "lessons/lessonsEdit";
 	}
 	
-	/*
+	/**
 	 * 课程更新页面
 	 */
-	@RequestMapping(value = "/lessonUpdate/{id}",method=RequestMethod.GET)
-	public String lessonUpdatePage(HttpServletRequest request,@PathVariable String id,Model model){
-		model.addAttribute("userId", id);
-		BaseLesson lesson = lessonService.selectByPrimaryKey(id);
+	@RequestMapping(value = "/lessonUpdate/{lessonId}",method=RequestMethod.GET)
+	public String lessonUpdatePage(HttpServletRequest request,Model model,@PathVariable String lessonId){
 		List<BaseUser> teacher = userService.selectUserByRole(DesignContent.TEACHER_ROLE_ID);
+		BaseLesson lesson = lessonService.selectByPrimaryKey(lessonId);
 		model.addAttribute("teacherInfo", teacher);
 		model.addAttribute("lesson", lesson);
 		return "lessons/lessonUpdate";
 	}
 	
-	/*
+	/**
 	 * 课程更新
 	 */
-	@RequestMapping(value = "/lessonUpdate",method=RequestMethod.GET)
-	public int lessonUpdate(HttpServletRequest request,BaseLesson lesson){
-		int result = 0;
+	@RequestMapping(value = "/lessonUpdate",method=RequestMethod.POST)
+	public String lessonUpdate(HttpServletRequest request,BaseLesson lesson){
 		if(lesson != null && lesson.getClassId() != null && lesson.getClassId() != ""){
-			result = lessonService.updateByPrimaryKeySelective(lesson);
+			int result = lessonService.updateByPrimaryKeySelective(lesson);
+			return "success";
+		}else{
+			return "error";
 		}
-		return result;
 	}
 	
-	/*
+	/**
 	 * 课程添加/更新
 	 */
 	@RequestMapping(value = "/lessonEdit",method=RequestMethod.POST)
 	@ResponseBody
 	public String lessonEdit(HttpServletRequest request , BaseLesson lesson){
-		
-		//type : 0为插入  1为更新
 		List<BaseLesson> lessonsList = lessonService.countLessonsExsistByClassName(lesson.getClassName());
-		if(lessonsList == null){
+		if(lessonsList.size() == 0){
 			lesson.setClassId(UUIDGenerator.getUUID());
 			if(lesson.getIsEnable() == null){
 				lesson.setIsEnable("0");
@@ -87,7 +96,7 @@ public class LessonController {
 		return "error";
 	}
 	
-	/*
+	/**
 	 * 课程查看
 	 */
 	@RequestMapping(value = "/lessonSelectPage",method=RequestMethod.GET)
@@ -96,7 +105,7 @@ public class LessonController {
 		return "lessons/lessonSelect";
 	}
 	
-	/*
+	/**
 	 * 课程删除
 	 */
 	@RequestMapping(value = "/delectLesson",method=RequestMethod.POST)

@@ -24,12 +24,24 @@ public class BaseScoreSqlProvider {
             VALUES("LESSON_ID", "#{lessonId,jdbcType=VARCHAR}");
         }
         
+        if (record.getLessonName() != null) {
+            VALUES("LESSON_NAME", "#{lessonName,jdbcType=VARCHAR}");
+        }
+        
         if (record.getTeacherId() != null) {
             VALUES("TEACHER_ID", "#{teacherId,jdbcType=VARCHAR}");
         }
         
+        if (record.getTeacherName() != null) {
+            VALUES("TEACHER_NAME", "#{teacherName,jdbcType=VARCHAR}");
+        }
+        
         if (record.getStudentId() != null) {
             VALUES("STUDENT_ID", "#{studentId,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getStudentName() != null) {
+            VALUES("STUDENT_NAME", "#{studentName,jdbcType=VARCHAR}");
         }
         
         if (record.getGrade() != null) {
@@ -55,12 +67,24 @@ public class BaseScoreSqlProvider {
             SET("LESSON_ID = #{lessonId,jdbcType=VARCHAR}");
         }
         
+        if (record.getLessonName() != null) {
+            SET("LESSON_NAME = #{lessonName,jdbcType=VARCHAR}");
+        }
+        
         if (record.getTeacherId() != null) {
             SET("TEACHER_ID = #{teacherId,jdbcType=VARCHAR}");
         }
         
+        if (record.getTeacherName() != null) {
+            SET("TEACHER_NAME = #{teacherName,jdbcType=VARCHAR}");
+        }
+        
         if (record.getStudentId() != null) {
             SET("STUDENT_ID = #{studentId,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getStudentName() != null) {
+            SET("STUDENT_NAME = #{studentName,jdbcType=VARCHAR}");
         }
         
         if (record.getGrade() != null) {

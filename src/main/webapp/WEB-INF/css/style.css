@@ -33,11 +33,17 @@ a:hover{cursor: pointer;}
 /* 左边侧栏 */
 .accordion-group .accordion-heading{line-height: 50px;border-bottom: 1px solid #B7B4B4; }
 .accordion-group .accordion-heading a{padding: 25px 0 25px 20px;font-size: 16px;font-weight: 600;text-decoration: none;color:#000000; }
-.accordion-group .accordion-heading span{float: right;padding: 25px; }
+.accordion-group .accordion-heading span{float: right;padding: 15px; }
 .accordion-group .accordion-body .accordion-inner{line-height: 50px;border-bottom: 1px solid #B7B4B4; }
 .accordion-group .accordion-body .accordion-inner a{font-size: larger;font-size: 16px;padding: 25px 0 25px 45px;text-decoration: none;color:#000000; }
 .accordion-group .accordion-body .accordion-inner span{float: right;padding: 25px; }
 .accordion-group .accordion-heading a:hover ,.accordion-group .accordion-body .accordion-inner a:hover {color:#137fbe;}
 .accordion-group .accordion-body .on{line-height: 50px;border-bottom: 1px solid #B7B4B4; }
     
+.Manager-form-detail{width:350px;font-weight:400;margin-left: 15px;overflow: hidden;word-break:break-all;text-overflow: ellipsis;}
+.Manager-form-title span{color:#d8000f}
+.Manager-form-title{width:150px;text-align:right;overflow:hidden;}
+    
+.red-star {color:red;padding-right:5px;font-size: large}
    
+.design-table-lesson{padding-left:30px;padding-top:40px;}

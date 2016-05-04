@@ -100,11 +100,11 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<!-- <error-page>
-		<error-code>404</error-code>
-		<location>/WEB-INF/jsp/error/404.html</location>
-	</error-page>
 	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/jsp/util/404.jsp</location>
+	</error-page>
+	<!-- <error-page>
 		<error-code>500</error-code>
 		<location>/error/500</location>
 	</error-page>

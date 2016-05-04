@@ -53,7 +53,7 @@
 	<!-- Shiro Filter -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="/login/loginPage" />
+		<property name="loginUrl" value="/" />
 		<property name="filters">
             <map>
                 <entry key="roleOrFilter">
@@ -66,8 +66,46 @@
 				<!-- 注意顺序为：权限控制，不需要登录，需要登录 。新增链接一定要按照顺序添加，否则会出现页面访问问题-->
 				<!-- 角色权限控制URL -->
 				<!-- roles[],perms[]  -->
-				<!-- /user/allUserPage = authc,roles[r1] -->
-				
+				<!-- usercontroller -->
+				/user/welcome = authc
+				/user/userInfoEditPage/** = authc
+				/user/selectAllUser = authc,roles[r1]
+				/user/allUserPage = authc,roles[r1]
+				/user/userRegister = authc,roles[r1]
+				/user/userRegisterPage = authc,roles[r1]
+				/user/userInfoSearch = authc
+				/user/userAddPage = authc,roles[r1]
+				/user/userInfoAdd = authc,roles[r1]
+				/user/selectClassStudentPage/** = authc,roles[r1]
+				/user/userInfoPage/** = authc
+				/user/loginOut = authc
+				<!-- lessonController -->
+				/lesson/selectLesson = authc
+				/lesson/lessonUpdate/** = authc,roles[r1]
+				/lesson/lessonUpdate = authc,roles[r1]
+				/lesson/lessonEdit = authc,roles[r1]
+				/lesson/lessonSelectPage = authc
+				/lesson/lessonEditPage = authc,roles[r1]
+				/lesson/delectLesson = authc,roles[r1]
+				<!-- classController -->
+				/classes/selectAllClass = authc
+				/classes/selectClass = authc
+				/classes/addClass = authc,roles[r1]
+				/classes/editClassPage/** = authc,roles[r1]
+				/classes/delectClass = authc,roles[r1]
+				/classes/editClass = authc,roles[r1]
+				/classes/addClassPage = authc,roles[r1]
+				/classes/selectAllClassPage = authc
+				<!-- scoreController -->
+				/score/selectAllStudentScorePage = authc,roleOrFilter[r1,r2]
+				/score/selectAllStudentScore = authc,roleOrFilter[r1,r2]
+				/score/checkExistLessonStudent = authc,roles[r3]
+				/score/insert = authc,roles[r3]
+				/score/deleteScore = authc,roleOrFilter[r1,r2]
+				/score/updateScore = authc,roleOrFilter[r1,r2]
+				/score/editScorePage/** = authc,roleOrFilter[r1,r2]
+				/score/selcetScoreById = authc,roleOrFilter[r1,r2]
+				/score/insertScorePage = authc,roleOrFilter[r1,r2]
 			</value>
 		</property>
 	</bean>

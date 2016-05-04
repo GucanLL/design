@@ -30,7 +30,39 @@ public class BaseClassController {
 	@Autowired
 	private UserService userService;
 	
-	/*
+	/**
+	 * 查询全部班级页面
+	 */
+	@RequestMapping(value = "/selectAllClassPage",method=RequestMethod.GET)
+	public String selectAllClassPage(HttpServletRequest request){
+		return "class/AllClass";
+	}
+	
+	/**
+	 * 查询全部课程
+	 */
+	@RequestMapping(value = "/selectAllClass",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> selectAllClass(HttpServletRequest request){
+		Map<String,Object> map = new HashMap<String, Object>();
+		List<BaseClass> list = classService.selectAll();
+		map.put("list", list);
+		return map;
+	}
+	
+	/**
+	 * 查询班级信息
+	 */
+	@RequestMapping(value = "/selectClass",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> selectClass(HttpServletRequest request,String classId){
+		Map<String,Object> map = new HashMap<String, Object>();
+		BaseClass classInfo = classService.selectClass(classId);
+		map.put("classInfo", classInfo);
+		return map;
+	}
+	
+	/**
 	 * 添加班级页面
 	 */
 	@RequestMapping(value = "/addClassPage",method=RequestMethod.GET)
@@ -40,7 +72,7 @@ public class BaseClassController {
 		return "class/addClass";
 	}
 	
-	/*
+	/**
 	 * 插入新班级
 	 */
 	@RequestMapping(value = "/addClass",method=RequestMethod.POST)
@@ -57,19 +89,8 @@ public class BaseClassController {
 		return "false";
 	}
 	
-	/*
-	 * 查询班级信息
-	 */
-	@RequestMapping(value = "/selectClass",method=RequestMethod.POST)
-	@ResponseBody
-	public Map<String,Object> selectClass(HttpServletRequest request,String classId){
-		Map<String,Object> map = new HashMap<String, Object>();
-		BaseClass bc = classService.selectClass(classId);
-		map.put("classInfo", bc);
-		return map;
-	}
 	
-	/*
+	/**
 	 * 更改班级信息页面
 	 */
 	@RequestMapping(value = "/editClassPage/{classId}",method=RequestMethod.GET)
@@ -80,7 +101,7 @@ public class BaseClassController {
 		return "class/editClass";
 	}
 	
-	/*
+	/**
 	 * 更改班级信息
 	 */
 	@RequestMapping(value = "/editClass",method=RequestMethod.POST)
@@ -96,23 +117,20 @@ public class BaseClassController {
 		return "false";
 	}
 	
-	/*
-	 * 查询全部班级页面
+	/**
+	 * 删除信息
 	 */
-	@RequestMapping(value = "/selectAllClassPage",method=RequestMethod.GET)
-	public String selectAllClassPage(HttpServletRequest request){
-		return "class/AllClass";
+	@RequestMapping(value = "/delectClass",method=RequestMethod.POST)
+	@ResponseBody
+	public String delectClass(HttpServletRequest request,String classId){
+		int result = 0;
+		if(classId!=null&&classId!=""){
+			result = classService.deleteByPrimaryKey(classId);
+		}
+		if(result != 0){
+			return "success";
+		}
+		return "false";
 	}
 	
-	/*
-	 * 查询全部课程
-	 */
-	@RequestMapping(value = "/selectAllClass",method=RequestMethod.POST)
-	@ResponseBody
-	public Map<String,Object> selectAllClass(HttpServletRequest request){
-		Map<String,Object> map = new HashMap<String, Object>();
-		List<BaseClass> list = classService.selectAll();
-		map.put("list", list);
-		return map;
-	}
 }

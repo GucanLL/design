@@ -48,8 +48,18 @@ public class BaseUser {
     private String addBy;
 
     private Date lastModifyTime;
+    
+    private String birthdayString;
+    
+    public String getBirthdayString() {
+		return birthdayString;
+	}
 
-    public String getId() {
+	public void setBirthdayString(String birthdayString) {
+		this.birthdayString = birthdayString;
+	}
+
+	public String getId() {
         return id;
     }
 

@@ -43,14 +43,14 @@ public class BaseRoleSqlProvider {
         return SQL();
     }
     public String findRole(BaseUser user) {
-        BEGIN();
-        SELECT("math_role");
-        
-        WHERE("1=1");
-        if (user.getIdentityNum() != null) {
-        	SET("ROLE_NAME = #{roleName,jdbcType=VARCHAR}");
-        }
-        
-        return SQL();
+
+    	StringBuffer sb = new StringBuffer();
+    	sb.append("SELECT mr.ROLE_ID roleId, mr.ROLE_NAME roleName FROM math_role mr "
+    			+ "LEFT JOIN math_user mu ON mu.ROLE = mr.ROLE_ID "
+    			+ "WHERE 1 = 1 ");
+    	if(user.getIdentityNum() != null){
+    		sb.append("AND mu.IDENTITY_NUM = #{identityNum,jdbcType=VARCHAR}");
+    	}
+    	return sb.toString();
     }
 }

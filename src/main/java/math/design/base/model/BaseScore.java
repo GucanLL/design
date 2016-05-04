@@ -5,9 +5,15 @@ public class BaseScore {
 
     private String lessonId;
 
+    private String lessonName;
+
     private String teacherId;
 
+    private String teacherName;
+
     private String studentId;
+
+    private String studentName;
 
     private String grade;
 
@@ -31,6 +37,14 @@ public class BaseScore {
         this.lessonId = lessonId;
     }
 
+    public String getLessonName() {
+        return lessonName;
+    }
+
+    public void setLessonName(String lessonName) {
+        this.lessonName = lessonName;
+    }
+
     public String getTeacherId() {
         return teacherId;
     }
@@ -39,12 +53,28 @@ public class BaseScore {
         this.teacherId = teacherId;
     }
 
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
     public String getStudentId() {
         return studentId;
     }
 
     public void setStudentId(String studentId) {
         this.studentId = studentId;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
     public String getGrade() {

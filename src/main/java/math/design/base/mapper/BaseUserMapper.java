@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.type.JdbcType;
@@ -93,6 +94,9 @@ public interface BaseUserMapper {
 
     @UpdateProvider(type=BaseUserSqlProvider.class, method="updateByPrimaryKeySelective")
     int updateByPrimaryKeySelective(BaseUser record);
+    
+    @UpdateProvider(type=BaseUserSqlProvider.class, method="updateByIdentityNumSelective")
+    int updateByIdentityNumSelective(BaseUser record);
 
     @Update({
         "update math_user",
@@ -125,9 +129,7 @@ public interface BaseUserMapper {
     /* 登录时select用户 */
     @Select({
         "select",
-        "ID, IDENTITY_NUM, NAME, ID_NUMBER, SEX, NATIONALITY, HEAD_IMG, IDENTITY_IMG, ",
-        "POLITICAL_STATUS, JOB_TITLE, EMAIL, ACADEMY, AT_CLASS, MAJOR_RESEARCH, ADDRESS, ",
-        "ADMISSION_DATE, BIRTHDAY, REMARKS, SCHOOL_LENGTH, ROLE, PASSWORD, ADD_BY, LAST_MODIFY_TIME",
+        "ID, IDENTITY_NUM, NAME, PASSWORD, ACADEMY, AT_CLASS, ROLE",
         "from math_user",
         "where IDENTITY_NUM = #{identityNum,jdbcType=VARCHAR}"
     })
@@ -135,26 +137,10 @@ public interface BaseUserMapper {
         @Result(column="ID", property="id", jdbcType=JdbcType.VARCHAR),
         @Result(column="IDENTITY_NUM", property="identityNum", jdbcType=JdbcType.VARCHAR),
         @Result(column="NAME", property="name", jdbcType=JdbcType.VARCHAR),
-        @Result(column="ID_NUMBER", property="idNumber", jdbcType=JdbcType.VARCHAR),
-        @Result(column="SEX", property="sex", jdbcType=JdbcType.VARCHAR),
-        @Result(column="NATIONALITY", property="nationality", jdbcType=JdbcType.VARCHAR),
-        @Result(column="HEAD_IMG", property="headImg", jdbcType=JdbcType.VARCHAR),
-        @Result(column="IDENTITY_IMG", property="identityImg", jdbcType=JdbcType.VARCHAR),
-        @Result(column="POLITICAL_STATUS", property="politicalStatus", jdbcType=JdbcType.VARCHAR),
-        @Result(column="JOB_TITLE", property="jobTitle", jdbcType=JdbcType.VARCHAR),
-        @Result(column="EMAIL", property="email", jdbcType=JdbcType.VARCHAR),
-        @Result(column="ACADEMY", property="academy", jdbcType=JdbcType.VARCHAR),
         @Result(column="AT_CLASS", property="atClass", jdbcType=JdbcType.VARCHAR),
-        @Result(column="MAJOR_RESEARCH", property="majorResearch", jdbcType=JdbcType.VARCHAR),
-        @Result(column="ADDRESS", property="address", jdbcType=JdbcType.VARCHAR),
-        @Result(column="ADMISSION_DATE", property="admissionDate", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="BIRTHDAY", property="birthday", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="REMARKS", property="remarks", jdbcType=JdbcType.VARCHAR),
-        @Result(column="SCHOOL_LENGTH", property="schoolLength", jdbcType=JdbcType.VARCHAR),
         @Result(column="ROLE", property="role", jdbcType=JdbcType.VARCHAR),
         @Result(column="PASSWORD", property="password", jdbcType=JdbcType.VARCHAR),
-        @Result(column="ADD_BY", property="addBy", jdbcType=JdbcType.VARCHAR),
-        @Result(column="LAST_MODIFY_TIME", property="lastModifyTime", jdbcType=JdbcType.TIMESTAMP)
+        @Result(column="ACADEMY", property="academy", jdbcType=JdbcType.VARCHAR),
     })
     LoginUser selectLogin(LoginUser record);
     
@@ -201,4 +187,67 @@ public interface BaseUserMapper {
         @Result(column="LAST_MODIFY_TIME", property="lastModifyTime", jdbcType=JdbcType.TIMESTAMP)
     })
     List<BaseUser> selectAllUser();
+    
+    @SelectProvider(type=BaseUserSqlProvider.class, method="selectUserIf")
+    @Results({
+        @Result(column="ID", property="id", jdbcType=JdbcType.VARCHAR, id=true),
+        @Result(column="IDENTITY_NUM", property="identityNum", jdbcType=JdbcType.VARCHAR),
+        @Result(column="NAME", property="name", jdbcType=JdbcType.VARCHAR),
+        @Result(column="ID_NUMBER", property="idNumber", jdbcType=JdbcType.VARCHAR),
+        @Result(column="SEX", property="sex", jdbcType=JdbcType.VARCHAR),
+        @Result(column="NATIONALITY", property="nationality", jdbcType=JdbcType.VARCHAR),
+        @Result(column="HEAD_IMG", property="headImg", jdbcType=JdbcType.VARCHAR),
+        @Result(column="IDENTITY_IMG", property="identityImg", jdbcType=JdbcType.VARCHAR),
+        @Result(column="POLITICAL_STATUS", property="politicalStatus", jdbcType=JdbcType.VARCHAR),
+        @Result(column="JOB_TITLE", property="jobTitle", jdbcType=JdbcType.VARCHAR),
+        @Result(column="EMAIL", property="email", jdbcType=JdbcType.VARCHAR),
+        @Result(column="ACADEMY", property="academy", jdbcType=JdbcType.VARCHAR),
+        @Result(column="AT_CLASS", property="atClass", jdbcType=JdbcType.VARCHAR),
+        @Result(column="MAJOR_RESEARCH", property="majorResearch", jdbcType=JdbcType.VARCHAR),
+        @Result(column="ADDRESS", property="address", jdbcType=JdbcType.VARCHAR),
+        @Result(column="ADMISSION_DATE", property="admissionDate", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="BIRTHDAY", property="birthday", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="REMARKS", property="remarks", jdbcType=JdbcType.VARCHAR),
+        @Result(column="SCHOOL_LENGTH", property="schoolLength", jdbcType=JdbcType.VARCHAR),
+        @Result(column="ROLE", property="role", jdbcType=JdbcType.VARCHAR),
+        @Result(column="PASSWORD", property="password", jdbcType=JdbcType.VARCHAR),
+        @Result(column="ADD_BY", property="addBy", jdbcType=JdbcType.VARCHAR),
+        @Result(column="LAST_MODIFY_TIME", property="lastModifyTime", jdbcType=JdbcType.TIMESTAMP)
+    })
+    List<BaseUser> selectUserIf(BaseUser record);
+    
+    @Select({
+        "select",
+        "ID, IDENTITY_NUM, NAME, ID_NUMBER, SEX, NATIONALITY, HEAD_IMG, IDENTITY_IMG, ",
+        "POLITICAL_STATUS, JOB_TITLE, EMAIL, ACADEMY, AT_CLASS, MAJOR_RESEARCH, ADDRESS, ",
+        "ADMISSION_DATE, BIRTHDAY, REMARKS, SCHOOL_LENGTH, ROLE, PASSWORD, ADD_BY, LAST_MODIFY_TIME",
+        "from math_user",
+        "where IDENTITY_NUM = #{identityNum,jdbcType=VARCHAR}"
+    })
+    @Results({
+        @Result(column="ID", property="id", jdbcType=JdbcType.VARCHAR, id=true),
+        @Result(column="IDENTITY_NUM", property="identityNum", jdbcType=JdbcType.VARCHAR),
+        @Result(column="NAME", property="name", jdbcType=JdbcType.VARCHAR),
+        @Result(column="ID_NUMBER", property="idNumber", jdbcType=JdbcType.VARCHAR),
+        @Result(column="SEX", property="sex", jdbcType=JdbcType.VARCHAR),
+        @Result(column="NATIONALITY", property="nationality", jdbcType=JdbcType.VARCHAR),
+        @Result(column="HEAD_IMG", property="headImg", jdbcType=JdbcType.VARCHAR),
+        @Result(column="IDENTITY_IMG", property="identityImg", jdbcType=JdbcType.VARCHAR),
+        @Result(column="POLITICAL_STATUS", property="politicalStatus", jdbcType=JdbcType.VARCHAR),
+        @Result(column="JOB_TITLE", property="jobTitle", jdbcType=JdbcType.VARCHAR),
+        @Result(column="EMAIL", property="email", jdbcType=JdbcType.VARCHAR),
+        @Result(column="ACADEMY", property="academy", jdbcType=JdbcType.VARCHAR),
+        @Result(column="AT_CLASS", property="atClass", jdbcType=JdbcType.VARCHAR),
+        @Result(column="MAJOR_RESEARCH", property="majorResearch", jdbcType=JdbcType.VARCHAR),
+        @Result(column="ADDRESS", property="address", jdbcType=JdbcType.VARCHAR),
+        @Result(column="ADMISSION_DATE", property="admissionDate", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="BIRTHDAY", property="birthday", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="REMARKS", property="remarks", jdbcType=JdbcType.VARCHAR),
+        @Result(column="SCHOOL_LENGTH", property="schoolLength", jdbcType=JdbcType.VARCHAR),
+        @Result(column="ROLE", property="role", jdbcType=JdbcType.VARCHAR),
+        @Result(column="PASSWORD", property="password", jdbcType=JdbcType.VARCHAR),
+        @Result(column="ADD_BY", property="addBy", jdbcType=JdbcType.VARCHAR),
+        @Result(column="LAST_MODIFY_TIME", property="lastModifyTime", jdbcType=JdbcType.TIMESTAMP)
+    })
+    BaseUser selectByIdentityNum(String id);
 }

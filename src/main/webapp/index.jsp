@@ -28,12 +28,11 @@
     
     <ul>
     	<div class="errorMsg">&nbsp;</div>
-	    <li><input name="" type="text" class="loginuser" placeholder="学号" id="loginuser"/></li>
+	    <li><input name="" type="text" class="loginuser" placeholder="帐号" id="loginuser"/></li>
 	    <li><input name="" type="password" class="loginpwd" placeholder="密码" id="loginpwd"/></li>
 	    <li><input name="" type="button" class="loginbtn" value="登录"  onclick="userlogin()"  /><!-- <label><input name="" type="checkbox" value="" checked="checked" />记住密码</label><label><a href="#">忘记密码？</a></label> --></li>
     </ul>
     
     </div>
-    
 </body>
 </html>

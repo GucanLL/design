@@ -69,6 +69,13 @@ public class UserService {
 	public BaseUser selectByPrimaryKey(String userId){
 		return baseUserMapper.selectByPrimaryKey(userId);
 	}
+	
+	/*
+	 * 通过UserID查找用户
+	 */
+	public BaseUser selectByIdentityNum(String userId){
+		return baseUserMapper.selectByIdentityNum(userId);
+	}
 
 	/*
 	 * 通过UserID更新用户信息
@@ -85,7 +92,7 @@ public class UserService {
 	}
 	
 	/*
-	 * 通过role查找用户
+	 * 查找所有用户
 	 */
 	public List<BaseUser> selectAllUser(){
 		return baseUserMapper.selectAllUser();
@@ -108,4 +115,18 @@ public class UserService {
         }
         return set;
     }
+	
+	/*
+	 * 按照条件查找用户
+	 */
+	public List<BaseUser> selectUserIf(BaseUser baseUser){
+		return baseUserMapper.selectUserIf(baseUser);
+	}
+	
+	/*
+	 * 通过IdentityNum更新用户信息
+	 */
+	public int updateByIdentityNumSelective(BaseUser user){
+		return baseUserMapper.updateByIdentityNumSelective(user);
+	}
 }

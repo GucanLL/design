@@ -64,11 +64,11 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	 * 授权查询回调函数, 进行鉴权但缓存中无用户的授权信息时调用.
 	 */
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		String loginName=(String) principals.fromRealm(getName()).iterator().next(); 
+		String identityNum=(String) principals.fromRealm(getName()).iterator().next(); 
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		//添加角色
 		BaseUser user = new BaseUser();
-		user.setName(loginName);
+		user.setIdentityNum(identityNum);
     	info.setRoles(userService.findRole(user));
 		return info;
 	}
