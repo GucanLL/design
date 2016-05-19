@@ -10,6 +10,7 @@
 <title>信息管理——登录页面</title>
 <%@ include file="/WEB-INF/jsp/include/common.jsp" %>
 <link href="${ctx }/web/css/login.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" type="image/ico" href="/web/images/favicon2.gif">
 <script language="javascript">
 	$(function(){
     $('.loginbox').css({'position':'absolute','left':($(window).width()-692)/2});

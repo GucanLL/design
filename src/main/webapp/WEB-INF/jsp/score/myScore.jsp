@@ -68,12 +68,12 @@
 
 <script type="text/javascript">
 $(function(){
-	selectAllStudentScore();
+	selectMyScore();
 })
-function selectAllStudentScore(){
+function selectMyScore(){
 	$.ajax({
 		type : "post",
-		url : "/score/selectAllStudentScore",
+		url : "/score/selectMyScore",
 		data : {},
 		success : function(data){
 			var list = data.scoreList;
@@ -85,7 +85,7 @@ function selectAllStudentScore(){
 				html +='<tr>';
 					html +='<td>'+list[i].lessonName+'</td>';
 					html +='<td>'+list[i].teacherName+'</td>';
-					html +='<td>'+list[i].studentId+'</td>';
+					html +='<td>'+list[i].studentName+'</td>';
 					html +='<td>'+list[i].lessonYear+'</td>';
 					html +='<td>'+list[i].grade+'</td>';
 					<shiro:hasAnyRoles name="r1,r2">
@@ -113,7 +113,7 @@ function deleteIt(scoreId){
 		success : function(data){
 			if(data == "success"){
 				alert("成功");
-				selectAllStudentScore();
+				selectMyScore();
 			}else{
 				alert("失败")
 			}

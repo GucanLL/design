@@ -11,6 +11,7 @@
 <%@ include file="/WEB-INF/jsp/include/common.jsp"%>
 <link href="${ctx }/web/css/style.css" rel="stylesheet" type="text/css" />
 <script src="${ctx }/web/js/user/userRegister.js"></script>
+<link rel="shortcut icon" type="image/ico" href="/web/images/favicon2.gif">
 </head>
 <body>
 	<!--导航条-->
@@ -36,7 +37,7 @@
 				</div>
 				<div class="col-md-9">
 					<form class="tl-form form-horizontal" id="RegisterForm"
-						style="padding-top: 40px; padding-left: 150px;">
+						style="padding-top: 40px; padding-left: 150px;padding-bottom:45px;">
 						<div class="form-group has-feedback">
 							<label class="col-sm-2 control-label"><em
 								class="red-star">*</em>学号/工号：</label>
@@ -254,8 +255,7 @@
 							</div>
 						</div>
 						<div class="form-group has-feedback">
-							<label class="col-sm-2 control-label"><em
-								class="red-star">*</em>备注：</label>
+							<label class="col-sm-2 control-label">备注：</label>
 							<div class="col-sm-5">
 								<input type="text" autocomplete="off" id="Remarks"
 									name="Remarks" class="form-control" placeholder=""> <span

@@ -77,17 +77,22 @@ $(function(){
 			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 		</div>
 		<div id="leftMenu4" class="accordion-body collapse in">
-			<shiro:hasAnyRoles name="r1,r2">
+			<shiro:hasRole name="r1">
 				<div class="accordion-inner">
 					<a href="/score/selectAllStudentScorePage">全部成绩查询</a>
 				</div>
 				<div class="accordion-inner">
-					<a href="/score/insertScorePage">添加成绩</a>
+					<a href="/score/insertScorePage">导入成绩</a>
 				</div>
-			</shiro:hasAnyRoles>
+			</shiro:hasRole>
+			<shiro:hasRole name="r2">
+				<div class="accordion-inner">
+					<a href="/score/selectAllStudentScorePage">全部成绩查询</a>
+				</div>
+			</shiro:hasRole>
 			<shiro:hasRole name="r3">
 				<div class="accordion-inner">
-					<a href="/score/selectAllStudentScorePage">成绩查询</a>
+					<a href="/score/selectMyScorePage">成绩查询</a>
 				</div>
 			</shiro:hasRole>
 		</div>

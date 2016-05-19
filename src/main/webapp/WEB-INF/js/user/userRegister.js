@@ -6,6 +6,13 @@ $(function(){
 	//getAcademy("Academy");
 })
 function register() {
+	var identityNum = $("#identityNum").val();
+	var name = $("#Name").val();
+	var email = $("#Email").val();
+	if(identityNum==""||identityNum==null||name==""||name==null||email==""||email==null){
+		alert("请填写必填项");
+		return;
+	}
 	$.ajax({
 		type : "post",
 		url : "/user/userRegister",

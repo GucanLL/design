@@ -63,7 +63,7 @@ public interface BaseClassMapper {
     @Select({
         "SELECT "
         + "CLASS_ID, CLASS_TEACHER_ID, CLASS_NUMBER, IS_ENABLE, "
-        + "( SELECT mu.`NAME` FROM math_user mu WHERE mu.ROLE = 'r2' AND mu.ID = mc.CLASS_TEACHER_ID ) AS teacherName "
+        + "( SELECT mu.`NAME` FROM math_user mu WHERE mu.ROLE = 'r2' AND mu.IDENTITY_NUM = mc.CLASS_TEACHER_ID ) AS teacherName "
         + "FROM math_classes mc"
     })
     @Results({

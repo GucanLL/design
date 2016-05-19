@@ -39,7 +39,8 @@
 						<div class="form-group has-feedback">
 							<label class="col-sm-2 control-label">课程名称：</label>
 							<div class="col-sm-5">
-								<select id="lessonId" name="lessonId" class="form-control">
+								<select id="lessonId" name="lessonId" class="form-control" onchange="loadAllData(this[selectedIndex].value)">
+									<option value="-1">请选择</option>
 									<c:forEach items="${lessonInfo }" var="lesson">
 										<option value="${lesson.classId }">${lesson.className }</option>
 									</c:forEach>
@@ -49,51 +50,26 @@
 						<div class="form-group has-feedback">
 							<label class="col-sm-2 control-label">授课教师：</label>
 							<div class="col-sm-5">
-								<select id="teacherID" name="teacherID" class="form-control">
-									<c:forEach items="${teacherInfo }" var="teacher">
-										<option value="${teacher.id }">${teacher.name }</option>
-									</c:forEach>
-								</select>
-							</div>
-						</div>
-						<div class="form-group has-feedback">
-							<label class="col-sm-2 control-label">学生姓名：</label>
-							<div class="col-sm-5">
-								<select id="studentId" name="studentId" class="form-control">
-									<c:forEach items="${studentInfo }" var="student">
-										<option value="${student.id }">${student.name }</option>
-									</c:forEach>
-								</select>
+								<input type="text" autocomplete="off" id="teacherID"
+									name="teacherID" class="form-control" disabled="disabled">
 							</div>
 						</div>
 						<div class="form-group has-feedback">
 							<label class="col-sm-2 control-label">课程学年：</label>
 							<div class="col-sm-5">
-								<select id="classYear" class="form-control">
-									<option value="2012-2013（1）">2012-2013（1）</option>
-									<option value="2012-2013（2）">2012-2013（2）</option>
-									<option value="2013-2014（1）">2013-2014（1）</option>
-									<option value="2013-2014（2）">2013-2014（2）</option>
-									<option value="2014-2015（1）">2014-2015（1）</option>
-									<option value="2014-2015（2）">2014-2015（2）</option>
-									<option value="2015-2016（1）">2015-2016（1）</option>
-									<option value="2015-2016（2）">2015-2016（2）</option>
-									<option value="2016-2017（1）">2016-2017（1）</option>
-									<option value="2016-2017（2）">2016-2017（2）</option>
-								</select>
+								<input type="text" autocomplete="off" id="classYear"
+									name="classYear" class="form-control" disabled="disabled">
 							</div>
 						</div>
 						<div class="form-group has-feedback">
-							<label class="col-sm-2 control-label">成绩：</label>
+							<label class="col-sm-2 control-label">上传文件：</label>
 							<div class="col-sm-5">
-								<input type="text" autocomplete="off" id="grade"
-									name="grade" class="form-control" placeholder="请填写成绩">
-								<span class="form-control-feedback name" aria-hidden="true"></span>
+								<input type="file" autocomplete="off"class="form-control">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-5">
-								<a class="btn red-btn submit-button" onclick="submit()">确定</a>
+								<a class="btn red-btn submit-button" onclick="excel()">导入</a>
 							</div>
 						</div>
 					</form>
@@ -102,13 +78,25 @@
 		</div>
 	</div>
 	<!--main-->
-
-
-
+<input type="hidden" id="lessonId">
 
 	<jsp:include page="/WEB-INF/jsp/include/footer.jsp"></jsp:include>
 
 	<script type="text/javascript">
+		function loadAllData(lessonId){
+			$.ajax({
+				type:"post",
+				url : "/lesson/selectLesson",
+				data : {classId : lessonId},
+				success : function(data){
+					var lesson = data.classInfp;
+					$("#teacherID").val(lesson.teacherName);
+					$("#studentName").val(lesson.teacherName);
+					$("#classYear").val(lesson.classYear);
+					$("#lessonId").val(lessonId);
+				}
+			})
+		}
 		function submit(){
 			var teacherID=$("#teacherID option:selected").val();
 			var teacherName=$("#teacherID option:selected").txt();
@@ -132,7 +120,27 @@
 				}
 			})
 		}
-		
+		function excel(){
+			var lessonId = $("#lessonId option:selected").val();
+			if(lessonId == "-1"){
+				alert("请选择课程");
+				return;
+			}
+			var lessonId = $("#lessonId").val();
+			$.ajax({
+				type:"post",
+				url : "/score/excelToDb",
+				data : {lessonId : lessonId},
+				success : function(data){
+					if(data == 1){
+						alert("导入成功")
+						window.location.href = "/score/selectAllStudentScorePage"
+					}else{
+						alert("导入成功")
+					}
+				}
+			})
+		}
 	</script>
 </body>
 </html>

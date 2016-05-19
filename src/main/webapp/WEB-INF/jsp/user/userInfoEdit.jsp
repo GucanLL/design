@@ -10,6 +10,7 @@
 <title>信息管理——用户信息更新</title>
 <%@ include file="/WEB-INF/jsp/include/common.jsp"%>
 <link href="${ctx }/web/css/style.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" type="image/ico" href="/web/images/favicon2.gif">
 </head>
 <body>
 	<!--导航条-->
@@ -343,6 +344,16 @@ function loadAllData(){
 			if(userInfo.role!=""&&userInfo.role!=null){
 				$("#Role").val(userInfo.role);
 			}
+			if(userInfo.address!=""&&userInfo.address!=null){
+				$("#Address").val(userInfo.address);
+			}
+			if(userInfo.schoolLength!=""&&userInfo.schoolLength!=null){
+				$("#schoolLength").val(userInfo.schoolLength);
+			}
+			if(userInfo.birthday!=""&&userInfo.birthday!=null){
+				$("#Birthday").val(userInfo.birthday);
+			}
+			
 		},
 		error:function(data,t){
 			console.log("错误"+data+"--"+t);
@@ -350,12 +361,18 @@ function loadAllData(){
 	});
 }
 function update(){
+	var identityNum = $("#identityNum").val();
+	var name = $("#Name").val();
+	if(identityNum==""||identityNum==null||name==""||name==null){
+		alert("请填写必填项");
+		return;
+	}
 	$.ajax({
 		type : "post",
 		url : "/user/update",
 		data : {
-			"identityNum" : $("#identityNum").val(),
-			"name":$("#Name").val(),
+			"identityNum" : identityNum,
+			"name":name,
 			"idNumber":$("#idNumber").val(),
 			"sex":$("#Sex").find("option:selected").val(),
 			"nationality":$("#Nationality").find("option:selected").val(),

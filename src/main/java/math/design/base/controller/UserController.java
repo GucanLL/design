@@ -17,6 +17,8 @@ import math.design.base.model.LoginUser;
 import math.design.base.service.ClassService;
 import math.design.base.service.UserService;
 import math.design.util.MD5Util;
+import math.design.util.Mail;
+import math.design.util.MailUtil;
 import math.design.util.UUIDGenerator;
 
 import org.apache.shiro.SecurityUtils;
@@ -83,7 +85,7 @@ public class UserController {
 		String p = Integer.toString(x);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
-		if(user.getBirthdayString()!=null){
+		if(user.getBirthdayString()!=null&&user.getBirthdayString()!=""){
 			try {
 				user.setBirthday(sdf.parse(user.getBirthdayString()));
 			} catch (ParseException e) {
@@ -100,44 +102,24 @@ public class UserController {
 		user.setLastModifyTime(new Date());
 		int result = userService.insertSelective(user);
 		if(result>0){
-			/*UsernamePasswordToken token = new UsernamePasswordToken();
-			token.setUsername(user.getIdentityNum());
-			token.setPassword(user.getPassword().toCharArray());
-			try {
-				SecurityUtils.getSubject().login(token);
-				return "success";
-			} catch (AuthenticationException e) {//登陆失败
-				//如果登陆失败销毁session
-				Subject currentUser = SecurityUtils.getSubject();
-	    		Session session = currentUser.getSession();
-	    		session.removeAttribute("loginUser");
-				System.out.println(e.getMessage());
-				if(e.getMessage() == "usererror"){//用户不存在
-					return "usererror";
-				}
-				return "error";//用户密码错误
-			}*/
-			/*StringBuffer content = new StringBuffer();
-			content.append("<p><strong>邮件标题：</strong>通力平台 – 邮箱激活</p>");
-			content.append("<p><strong>邮件内容：</strong></p>");
-			content.append("<p>如果您无法直接点击上面链接访问，请将链接复制到浏览器地址栏进行访问。</p>");
-			content.append("<p>为保障您的帐号安全，请在24小时内点击该链接。若您没有申请过验证邮箱 ，请您忽略此邮件，由此给您带来的不便请谅解。</p>");
-			content.append("<p>本邮件为系统邮件，请勿直接回复，谢谢。</p>");
-			
-			MailSenderInfo mailInfo = new MailSenderInfo();
-			mailInfo.setMailServerHost(mailServerHost);
-			mailInfo.setValidate(true);
-			mailInfo.setUserName(mailUserName);
-			mailInfo.setPassword(mailPassword);
-			mailInfo.setFromAddress(mailUserName);
-			mailInfo.setSubject(subject);
-			
-			mailInfo.setToAddress("296232480@qq.com");
-			mailInfo.setContent(content.toString());
-			//这个类主要来发送邮件
-			SimpleMailSender sms = new SimpleMailSender(); 
-			sms.sendHtmlMail(mailInfo);*/
-			return "success";
+			/*
+			 * 发送邮件
+			 */
+			StringBuffer content = new StringBuffer();
+			content.append(p);
+			Mail mail = new Mail();  
+	        mail.setHost("smtp.163.com"); // 设置邮件服务器,如果不用163的,自己找找看相关的  
+	        mail.setSender("gu_can123@163.com");  
+	        mail.setReceiver(user.getEmail()); // 接收人  
+	        mail.setUsername("gu_can123@163.com"); // 登录账号,一般都是和邮箱名一样吧  
+	        mail.setPassword("29871413qing"); // 发件人邮箱的登录密码  
+	        mail.setSubject("数学科学学院学生信息管理系统 初始密码"); 
+	        mail.setMessage(content.toString());  
+	        if(new MailUtil().send(mail)){
+	        	return "success";
+	        }else{
+	        	return "false";
+	        }
 		}else{
 			return "error";
 		}
@@ -280,11 +262,28 @@ public class UserController {
 	public Map<String,Object> update(HttpServletRequest request,BaseUser user){
 		Map<String,Object> m = new HashMap<String, Object>();
 		if(user!=null){
-			int result = userService.updateByIdentityNumSelective(user);
+			userService.updateByIdentityNumSelective(user);
 			m.put("result", "success");
 		}else{
 			m.put("result", "false");
 		}
 		return m;
 	}
+	
+	/**
+	 * 根据学号查询用户信息
+	 */
+	@RequestMapping(value = "/deleteByID", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> deleteByID(HttpServletRequest request,String id){
+		Map<String,Object> m = new HashMap<String, Object>();
+		if(id!=null){
+			userService.deleteById(id);
+			m.put("result", "success");
+		}else{
+			m.put("result", "false");
+		}
+		return m;
+	}
+	
 }

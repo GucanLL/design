@@ -129,4 +129,7 @@ public class UserService {
 	public int updateByIdentityNumSelective(BaseUser user){
 		return baseUserMapper.updateByIdentityNumSelective(user);
 	}
+	public int deleteById(String id){
+		return baseUserMapper.deleteByIdentityNum(id);
+	}
 }

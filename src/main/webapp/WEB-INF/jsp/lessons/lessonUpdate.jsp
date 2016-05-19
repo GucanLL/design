@@ -49,7 +49,7 @@
 							<div class="col-sm-5">
 								<select id="teacherID" name="teacherID" class="form-control">
 									<c:forEach items="${teacherInfo }" var="teacher">
-										<option value="${teacher.id }">${teacher.name }</option>
+										<option value="${teacher.identityNum }">${teacher.name }</option>
 									</c:forEach>
 								</select>
 							</div>
@@ -91,7 +91,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-5">
-								<a class="btn red-btn submit-button" onclick="submit()">确定</a>
+								<a class="btn red-btn submit-button" id="submitButton" onclick="submit()">确定</a>
 							</div>
 						</div>
 						<input type="hidden" id="classId" value="${lesson.classId }">

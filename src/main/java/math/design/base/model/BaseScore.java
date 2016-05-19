@@ -20,8 +20,14 @@ public class BaseScore {
     private String lessonYear;
 
     private String isEnable;
+    
+   /* public BaseScore(String id,String teacherName){
+    	this.id = id;
+    	this.teacherName = teacherName;
+    }*/
 
-    public String getId() {
+    
+	public String getId() {
         return id;
     }
 

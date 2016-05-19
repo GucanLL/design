@@ -48,7 +48,7 @@
 							<div class="col-sm-5">
 								<select id="teacherID" name="teacherID" class="form-control">
 									<c:forEach items="${teacherInfo }" var="teacher">
-										<option value="${teacher.id }">${teacher.name }</option>
+										<option value="${teacher.identityNum }">${teacher.name }</option>
 									</c:forEach>
 								</select>
 							</div>
@@ -101,6 +101,10 @@
 			/*  alert(JSON.stringify(teacherID));
 			return false;  */
 			var classNumber = $("#classNumber").val();
+			if(classId==""||classId==null||teacherID==""||teacherID==null||classNumber==""||classNumber==null){
+				alert("请填写全部信息")
+				return;
+			}
 			$.ajax({
 				type:"post",
 				url : "/classes/editClass",

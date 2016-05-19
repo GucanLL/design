@@ -3,8 +3,8 @@
 <div class="container">
 	<div class="row">
 		<ul class="clearfix">
-			<li class="col-md-3"><a herf="#"><img class="logo"
-					src="/web/images/logo1.png"></a></li>
+			<li class="col-md-3"><a herf="/user/welcome"><img class="logo"
+					src="/web/images/logo1.png" onclick="window.location.href = '/user/welcome'"></a></li>
 		</ul>
 	</div>
 </div>

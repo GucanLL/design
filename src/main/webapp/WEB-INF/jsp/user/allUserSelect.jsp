@@ -116,12 +116,33 @@ function loadAllData(role){
 				<shiro:hasRole name="r1">
 					html +='<td>';
 						html +='<a href="/user/userInfoEditPage/'+list[i].identityNum+'">编辑&nbsp;&nbsp;</a>';
-						html +='<a onclick="deleteIt('+list[i].identityNum+')"">&nbsp;删除</a>';
+						html +='<a data-id = "'+list[i].id+'" onclick="deleteIt(this)">&nbsp;删除</a>';
 					html +='</td>';
 				</shiro:hasRole>
 			html +='</tr>';
 			}
 			$("#userInfo").html(html);
+		},
+		error:function(data,t){
+			console.log("错误"+data+"--"+t);
+		}
+	});
+}
+function deleteIt(obj){
+	var id = $(obj).attr("data-id");
+	$.ajax({
+		type:"post",
+		url : "/user/deleteByID",
+		data : {
+			id:id
+		},
+		success : function(data) {
+			if(data.result == "success"){
+				alert("删除成功")
+				loadAllData();
+			}else{
+				alert("删除失败")
+			}
 		},
 		error:function(data,t){
 			console.log("错误"+data+"--"+t);

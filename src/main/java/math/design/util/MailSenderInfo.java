@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 
 public class MailSenderInfo {
 	// 发送邮件的服务器的IP和端口
-	private String mailServerHost;
+	private String mailServerHost = "smtp.qq.com";
 	private String mailServerPort = "465";
 	// 邮件发送者的地址
 	private String fromAddress;
@@ -38,7 +38,7 @@ public class MailSenderInfo {
 		return p;
 	}
 	
-	public  MailSenderInfo() {
+	/*public  MailSenderInfo() {
 		ResourceBundle resorce = ResourceBundle.getBundle("email");
 		this.mailServerHost = resorce.getString("mail.smtp.host");
 		this.mailServerPort = resorce.getString("mail.smtp.port");
@@ -46,7 +46,7 @@ public class MailSenderInfo {
 		this.userName = resorce.getString("mail.smtp.userName");
 		this.password = resorce.getString("mail.smtp.password");
 		this.fromAddress = resorce.getString("mail.smtp.fromAddress");
-	}
+	}*/
 
 	public String getMailServerHost() {
 		return mailServerHost;

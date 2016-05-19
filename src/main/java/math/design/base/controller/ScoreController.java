@@ -1,15 +1,20 @@
 package math.design.base.controller;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import jxl.Sheet;
+import jxl.Workbook;
 import math.design.base.model.BaseLesson;
 import math.design.base.model.BaseScore;
 import math.design.base.model.BaseUser;
 import math.design.base.model.DesignContent;
+import math.design.base.model.LoginUser;
 import math.design.base.service.LessonService;
 import math.design.base.service.ScoreService;
 import math.design.base.service.UserService;
@@ -76,7 +81,7 @@ public class ScoreController {
 	}
 	
 	/**
-	 * 查询全部学生成绩
+	 * 跳转全部学生成绩
 	 */
 	@RequestMapping(value = "/selectAllStudentScorePage",method=RequestMethod.GET)
 	public String selectAllStudentScorePage(HttpServletRequest request){
@@ -142,4 +147,72 @@ public class ScoreController {
 		model.addAttribute("teacherInfo", teacher);
 		return "/score/insertScore";
 	}
+	
+	/**
+	 * 跳转全部学生成绩
+	 */
+	@RequestMapping(value = "/selectMyScorePage",method=RequestMethod.GET)
+	public String selectMyScorePage(HttpServletRequest request){
+		return "/score/myScore";
+	}
+	
+	/**
+	 * 查询我的成绩
+	 */
+	@RequestMapping(value = "/selectMyScore",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> selectMyScore(HttpServletRequest request){
+		LoginUser lu = (LoginUser) request.getSession().getAttribute("loginUser");
+		Map<String , Object> map = new HashMap<String, Object>();
+		List<BaseScore> list = scoreService.selectMyScore(lu.getIdentityNum());
+		map.put("scoreList", list);
+		return map;
+	}
+	
+	public static List<BaseScore> getAllByExcel(String file,String lessonId){
+        List<BaseScore> list=new ArrayList<BaseScore>();
+        try {
+            Workbook rwb=Workbook.getWorkbook(new File(file));
+            Sheet rs=rwb.getSheet(0);//或者rwb.getSheet(0)
+            int clos=rs.getColumns();//得到所有的列
+            int rows=rs.getRows();//得到所有的行
+            
+            System.out.println(clos+" rows:"+rows);
+            for (int i = 1; i < rows; i++) {
+                for (int j = 0; j < clos; j++) {
+                    //第一个是列数，第二个是行数
+                    String studentId=rs.getCell(j++, i).getContents();
+                    String grade=rs.getCell(j++, i).getContents();
+                    BaseScore bs = new BaseScore();
+                    bs.setStudentId(studentId);
+                    bs.setGrade(grade);
+                    bs.setLessonId(lessonId);
+                    list.add(bs);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+        return list;
+        
+    }
+	@RequestMapping(value = "/excelToDb",method=RequestMethod.POST)
+	@ResponseBody
+	public int excelToDb(BaseScore s){
+		 //得到表格中所有的数据
+        List<BaseScore> listExcel=getAllByExcel("f://book.xls",s.getLessonId());
+        int result = 0;
+        for (BaseScore bs : listExcel) {
+            int isExist = scoreService.countExist(bs);
+            if(isExist != 0){
+            	String id = scoreService.selectBycondition(bs);
+            	bs.setId(id);
+            	result = scoreService.updateScore(bs);
+            }else{
+            	bs.setId(UUIDGenerator.getUUID());
+            	result = scoreService.insertSelective(bs);
+            }
+        }
+        return result;
+    }
 }

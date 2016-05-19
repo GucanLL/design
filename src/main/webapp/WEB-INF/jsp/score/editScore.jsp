@@ -114,10 +114,15 @@
 		}
 		function submit(){
 			var id = $("#scoreId").val();
+			var grade = $("#grade").val();
+			if(grade == ""|| grade == null){
+				alert("请填写成绩");
+				return;
+			}
 			$.ajax({
 				type:"post",
 				url : "/score/updateScore",
-				data : {id:id,grade:$("#grade").val()},
+				data : {id:id,grade:grade},
 				success : function(data){
 					if(data == "success"){
 						alert("成功")

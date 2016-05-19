@@ -7,6 +7,11 @@ function submit() {
 	var classYear = $("#classYear option:selected").val();
 	var lessonType = $("#lessonType option:selected").val();
 	var teacherName = $("#teacherID option:selected").text();
+	if(className==""||className==null||teacherID==""||teacherID==null||classYear==""||classYear==null
+			||lessonType==""||lessonType==null||teacherName==""||teacherName==null){
+		alert("请填写全部信息")
+		return;
+	}
 	$.ajax({
 		type : "post",
 		url : "/lesson/lessonEdit",

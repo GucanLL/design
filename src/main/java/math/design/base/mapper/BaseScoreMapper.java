@@ -85,6 +85,7 @@ public interface BaseScoreMapper {
     	"WHERE ms.LESSON_ID = #{lessonId,jdbcType=VARCHAR} AND ms.STUDENT_ID=#{studentId,jdbcType=VARCHAR}"
     })
     int isExistLessonStudent(BaseScore record);
+    
     @Select({
     	"select",
         "ID, LESSON_ID, LESSON_NAME, TEACHER_ID, TEACHER_NAME, STUDENT_ID, STUDENT_NAME, ",
@@ -104,4 +105,31 @@ public interface BaseScoreMapper {
         @Result(column="IS_ENABLE", property="isEnable", jdbcType=JdbcType.VARCHAR)
     })
     List<BaseScore> selectAllStudentScore();
+    @Select({
+    	"select",
+        "ID, LESSON_ID, LESSON_NAME, TEACHER_ID, TEACHER_NAME, STUDENT_ID, STUDENT_NAME, ",
+        "GRADE, LESSON_YEAR, IS_ENABLE",
+        "from math_score",
+        "WHERE STUDENT_ID=#{studentId,jdbcType=VARCHAR}"
+    })
+    @Results({
+        @Result(column="ID", property="id", jdbcType=JdbcType.VARCHAR, id=true),
+        @Result(column="LESSON_ID", property="lessonId", jdbcType=JdbcType.VARCHAR),
+        @Result(column="LESSON_NAME", property="lessonName", jdbcType=JdbcType.VARCHAR),
+        @Result(column="TEACHER_ID", property="teacherId", jdbcType=JdbcType.VARCHAR),
+        @Result(column="TEACHER_NAME", property="teacherName", jdbcType=JdbcType.VARCHAR),
+        @Result(column="STUDENT_ID", property="studentId", jdbcType=JdbcType.VARCHAR),
+        @Result(column="STUDENT_NAME", property="studentName", jdbcType=JdbcType.VARCHAR),
+        @Result(column="GRADE", property="grade", jdbcType=JdbcType.VARCHAR),
+        @Result(column="LESSON_YEAR", property="lessonYear", jdbcType=JdbcType.VARCHAR),
+        @Result(column="IS_ENABLE", property="isEnable", jdbcType=JdbcType.VARCHAR)
+    })
+    List<BaseScore> selectMyScore(String studentId);
+    
+    @Select({
+    	"SELECT ID FROM math_score ms ",
+    	"WHERE ms.LESSON_ID = #{lessonId,jdbcType=VARCHAR} AND ms.STUDENT_ID=#{studentId,jdbcType=VARCHAR}"
+    })
+    String selectBycondition(BaseScore record);
+    
 }

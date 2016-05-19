@@ -15,6 +15,12 @@ function submit() {
 	var lessonType = $("#lessonType option:selected").val();
 	var teacherName = $("#teacherID option:selected").text();
 	var isEnable = $("#isEnable option:selected").val();
+	/*if(className==""||className==null||teacherID==""||teacherID=="-1"||classYear==""||classYear==null
+			||lessonType==""||lessonType==null||teacherName==""||teacherName==null
+			||classId==""||classId==null||isEnable==""||isEnable==null){
+		alert("请填写全部信息")
+		return;
+	}*/
 	$.ajax({
 		type : "post",
 		url : "/lesson/lessonUpdate",
@@ -28,10 +34,10 @@ function submit() {
 			isEnable : isEnable
 		},
 		success : function(data) {
-			if (data == "success") {
+			if(data == "success"){
 				alert("成功")
 				window.location.href = "/lesson/lessonSelectPage"
-			} else {
+			}else{
 				alert("失败")
 			}
 

@@ -47,7 +47,7 @@
 							<div class="col-sm-5">
 								<select id="teacherID" name="teacherID" class="form-control">
 									<c:forEach items="${teacherInfo }" var="teacher">
-										<option value="${teacher.id }">${teacher.name }</option>
+										<option value="${teacher.identityNum }">${teacher.name }</option>
 									</c:forEach>
 								</select>
 							</div>

@@ -40,4 +40,12 @@ public class ScoreService {
 	public BaseScore selectByPrimaryKey(String id){
 		return baseScoreMapper.selectByPrimaryKey(id);
 	}
+	
+	public List<BaseScore> selectMyScore(String studentId){
+		return baseScoreMapper.selectMyScore(studentId);
+	}
+	
+	public String selectBycondition(BaseScore record){
+		return baseScoreMapper.selectBycondition(record);
+	}
 }

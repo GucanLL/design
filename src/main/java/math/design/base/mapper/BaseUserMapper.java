@@ -24,7 +24,7 @@ public interface BaseUserMapper {
         "delete from math_user",
         "where ID = #{id,jdbcType=VARCHAR}"
     })
-    int deleteByPrimaryKey(String id);
+    int deleteByIdentityNum(String id);
 
     @Insert({
         "insert into math_user (ID, IDENTITY_NUM, ",
